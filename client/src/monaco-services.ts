@@ -8,27 +8,31 @@ import { MonacoCommands } from './monaco-commands';
 import { MonacoLanguages } from "./monaco-languages";
 import { MonacoWorkspace } from "./monaco-workspace";
 import { ConsoleWindow } from "./console-window";
-import { Services } from "./services";
+import { Services, Window } from "./services";
+import { IDiagnosticListener } from './monaco-diagnostic-collection';
 
 export interface MonacoServices extends Services {
     commands: MonacoCommands
     languages: MonacoLanguages
     workspace: MonacoWorkspace
-    window: ConsoleWindow
+    window: Window
 }
 export namespace MonacoServices {
     export interface Options {
-        rootUri?: string
+        rootUri?: string,
+        diagListener?: IDiagnosticListener,
+        window?: Window
     }
     export type Provider = () => MonacoServices;
-    export function create(_monaco: typeof monaco, options: Options = {}): MonacoServices {
+    export function create(_monaco: typeof monaco,
+                           options: Options = {}): MonacoServices {
         const m2p = new MonacoToProtocolConverter(_monaco);
         const p2m = new ProtocolToMonacoConverter(_monaco);
         return {
             commands: new MonacoCommands(_monaco),
-            languages: new MonacoLanguages(_monaco, p2m, m2p),
+            languages: new MonacoLanguages(_monaco, options.diagListener, p2m, m2p),
             workspace: new MonacoWorkspace(_monaco, p2m, m2p, options.rootUri),
-            window: new ConsoleWindow()
+            window: options.window || new ConsoleWindow()
         }
     }
     export function install(_monaco: typeof monaco, options: Options = {}): MonacoServices {

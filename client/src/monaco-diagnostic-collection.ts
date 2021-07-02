@@ -7,6 +7,10 @@ import { DiagnosticCollection, Diagnostic } from './services';
 import { DisposableCollection, Disposable } from './disposable';
 import { ProtocolToMonacoConverter } from './monaco-converter';
 
+export interface IDiagnosticListener {
+    onDiagnosticSet(uri: string, diagnostics: Diagnostic[]) : void;
+}
+
 export class MonacoDiagnosticCollection implements DiagnosticCollection {
 
     protected readonly diagnostics = new Map<string, MonacoModelDiagnostics | undefined>();
@@ -14,6 +18,7 @@ export class MonacoDiagnosticCollection implements DiagnosticCollection {
 
     constructor(
         protected readonly _monaco: typeof monaco,
+        private readonly listener : IDiagnosticListener | undefined,
         protected readonly name: string,
         protected readonly p2m: ProtocolToMonacoConverter) {
     }
@@ -39,8 +44,10 @@ export class MonacoDiagnosticCollection implements DiagnosticCollection {
                 modelDiagnostics.dispose();
             }));
         }
-    }
 
+        if (this.listener)
+            this.listener.onDiagnosticSet(uri, diagnostics);
+    }
 }
 
 export class MonacoModelDiagnostics implements Disposable {

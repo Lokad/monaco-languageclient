@@ -12,3 +12,4 @@ export * from './monaco-languages';
 export * from './monaco-workspace';
 export * from './monaco-services';
 export * from './monaco-converter';
+export { IDiagnosticListener } from "./monaco-diagnostic-collection"

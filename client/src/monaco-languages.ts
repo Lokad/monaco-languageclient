@@ -14,7 +14,7 @@ import {
     DocumentSemanticTokensProvider, DocumentRangeSemanticTokensProvider
 } from "./services";
 
-import { MonacoDiagnosticCollection } from './monaco-diagnostic-collection';
+import { MonacoDiagnosticCollection, IDiagnosticListener } from './monaco-diagnostic-collection';
 import { ProtocolToMonacoConverter, MonacoToProtocolConverter } from './monaco-converter';
 import { DisposableCollection, Disposable } from './disposable';
 
@@ -50,6 +50,7 @@ export class MonacoLanguages implements Languages {
 
     constructor(
         protected readonly _monaco: typeof monaco,
+        protected readonly diagnosticListener: IDiagnosticListener | undefined,
         protected readonly p2m: ProtocolToMonacoConverter,
         protected readonly m2p: MonacoToProtocolConverter
     ) { }
@@ -59,7 +60,7 @@ export class MonacoLanguages implements Languages {
     }
 
     createDiagnosticCollection(name?: string): DiagnosticCollection {
-        return new MonacoDiagnosticCollection(this._monaco, name || 'default', this.p2m);
+        return new MonacoDiagnosticCollection(this._monaco, this.diagnosticListener, name || 'default', this.p2m);
     }
 
     registerCompletionItemProvider(selector: DocumentSelector, provider: CompletionItemProvider, ...triggerCharacters: string[]): Disposable {

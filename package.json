@@ -29,8 +29,6 @@
     "publish:dev": "lerna publish --canary --preid dev --dist-tag dev --yes"
   },
   "workspaces": [
-    "client",
-    "example",
-    "examples/browser"
+    "client"
   ]
 }

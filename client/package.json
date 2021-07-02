@@ -1,18 +1,18 @@
 {
-    "name": "monaco-languageclient",
-    "version": "0.14.0",
+    "name": "monaco-languageclient-lokad",
+    "version": "0.25.0-dev.3",
     "description": "Monaco Language client implementation",
-    "author": "TypeFox GmbH (http://www.typefox.io)",
+    "author": "TypeFox GmbH (http://www.typefox.io) | With Lokad tweaks",
     "license": "MIT",
     "engines": {
         "vscode": "^1.50.0"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/TypeFox/monaco-languageclient.git"
+        "url": "https://github.com/Lokad/monaco-languageclient.git"
     },
     "bugs": {
-        "url": "https://github.com/TypeFox/monaco-languageclient/issues"
+        "url": "https://github.com/Lokad/monaco-languageclient/issues"
     },
     "main": "./lib/index.js",
     "typings": "./lib/index",
