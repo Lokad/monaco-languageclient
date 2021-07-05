@@ -1,6 +1,6 @@
 {
     "name": "monaco-languageclient-lokad",
-    "version": "0.25.0-dev.3",
+    "version": "0.25.2",
     "description": "Monaco Language client implementation",
     "author": "TypeFox GmbH (http://www.typefox.io) | With Lokad tweaks",
     "license": "MIT",
